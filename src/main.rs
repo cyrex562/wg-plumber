@@ -1,6 +1,6 @@
-use std::{path::PathBuf, any};
+use std::{any, path::PathBuf};
 
-use clap::{Parser,Subcommand, Args,command};
+use clap::{command, Args, Parser, Subcommand};
 use serde::Deserialize;
 
 #[derive(Parser)]
@@ -13,13 +13,19 @@ struct Cli {
     config: String,
     #[command(subcommand)]
     command: Commands,
-
 }
 
 #[derive(Deserialize)]
 struct Config {
-
+    interfaces: Vec<Interface>,
+    peers: Vec<Peer>,
 }
+
+#[derive(Deserialize)]
+struct Interface {}
+
+#[derive(Deserialize)]
+struct Peer {}
 
 #[derive(Subcommand)]
 enum Commands {
@@ -56,79 +62,49 @@ enum Commands {
 }
 
 #[derive(Args)]
-struct ConnectionStatusArgs {
-
-}
+struct ConnectionStatusArgs {}
 
 #[derive(Args)]
-struct AllConnectionStatusesArgs {
-
-}
+struct AllConnectionStatusesArgs {}
 
 #[derive(Args)]
-struct StartConnectionArgs {
-
-}
+struct StartConnectionArgs {}
 
 #[derive(Args)]
-struct StopConnectionArgs {
-
-}
+struct StopConnectionArgs {}
 
 #[derive(Args)]
-struct StartAllConnectionsArgs {
-
-}
+struct StartAllConnectionsArgs {}
 
 #[derive(Args)]
-struct DeletePeerArgs {
-
-}
+struct DeletePeerArgs {}
 
 #[derive(Args)]
-struct ListAllConnectionPeersArgs {
-
-}
+struct ListAllConnectionPeersArgs {}
 
 #[derive(Args)]
-struct ListConnectionPeersArgs {
-
-}
+struct ListConnectionPeersArgs {}
 
 #[derive(Args)]
-struct ServerArgs {
-
-}
+struct ServerArgs {}
 
 #[derive(Args)]
-struct StopAllConnectionsArgs {
-
-}
+struct StopAllConnectionsArgs {}
 
 #[derive(Args)]
-struct CreateInterfaceArgs{
-
-}
+struct CreateInterfaceArgs {}
 
 #[derive(Args)]
-struct UpdateInterfaceArgs{
-
-}
+struct UpdateInterfaceArgs {}
 
 #[derive(Args)]
-struct DeleteInterfaceArgs {
-
-}
+struct DeleteInterfaceArgs {}
 
 #[derive(Args)]
-struct CreatePeerArgs {
-
-}
+struct CreatePeerArgs {}
 
 #[derive(Args)]
-struct UpdatePeerArgs {
-
-}
+struct UpdatePeerArgs {}
 
 fn create_interface(config: &Config, args: &CreateInterfaceArgs) -> anyhow::Result<()> {
     Ok(())
@@ -150,76 +126,79 @@ fn start_all_connections(config: &Config, args: &StartAllConnectionsArgs) -> any
     Ok(())
 }
 
-
-fn main() -> anyhow::Result<()>{
+fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     let config_path = PathBuf::from(cli.config);
     if config_path.exists() {
         println!("Config file {} exists", config_path.to_str().unwrap());
     } else {
-        panic!("Config file {} does not exist", config_path.to_str().unwrap());
+        panic!(
+            "Config file {} does not exist",
+            config_path.to_str().unwrap()
+        );
     }
 
-    let config: Config = toml::from_str(std::fs::read_to_string(config_path).unwrap().as_str()).unwrap();
+    let config: Config =
+        toml::from_str(std::fs::read_to_string(config_path).unwrap().as_str()).unwrap();
 
     match &cli.command {
         Commands::CreateInterface(args) => {
             println!("CreateInterface");
             create_interface(&config, args)?;
-        },
+        }
         Commands::UpdateInterface(args) => {
             println!("UpdateInterface");
             update_interface(&config, args)?;
-        },
+        }
         Commands::DeleteInterface(args) => {
             println!("DeleteInterface");
             delete_interface(&config, args)?;
-        },
+        }
         Commands::StartConnection(args) => {
             println!("StartConnection");
             start_connection(&config, args)?;
-        },
+        }
         Commands::StopConnection(args) => {
             println!("StopConnection");
             stop_connection(&config, args)?;
-        },
+        }
         Commands::StartAllConnections(args) => {
             println!("StartAllConnections");
             start_all_connections(&config, args)?;
-        },
+        }
         Commands::StopAllConnections(args) => {
             println!("StopAllConnections");
             stop_all_connections(&config, args)?;
-        },
+        }
         Commands::CreatePeer(args) => {
             println!("CreatePeer");
             create_peer(&config, args)?;
-        },
+        }
 
         Commands::UpdatePeer(args) => {
             println!("UpdatePeer");
             update_peer(&config, args)?;
-        },
+        }
         Commands::DeletePeer(args) => {
             println!("DeletePeer");
             delete_peer(&config, args)?;
-        },
+        }
         Commands::ListConnectionPeers(args) => {
             println!("ListConnectionPeers");
             list_connection_peers(&config, args)?;
-        },
+        }
         Commands::ListAllConnectionPeers(args) => {
             println!("ListAllConnectionPeers");
             list_all_connection_peers(&config, args)?;
-        },
+        }
         Commands::Server(args) => {
             println!("Server");
             run_server(&config, args)?;
-        },
+        }
         Commands::ConnectionStatus(args) => {
             println!("ConnectionStatus");
             connection_status(&config, args)?;
-        },
+        }
         Commands::AllConnectionStatuses(args) => {
             println!("AllConnectionStatuses");
             all_connection_statuses(&config, args)?;
@@ -228,7 +207,10 @@ fn main() -> anyhow::Result<()>{
     Ok(())
 }
 
-fn all_connection_statuses(config: &Config, args: &AllConnectionStatusesArgs) -> anyhow::Result<()> {
+fn all_connection_statuses(
+    config: &Config,
+    args: &AllConnectionStatusesArgs,
+) -> anyhow::Result<()> {
     todo!()
 }
 
@@ -240,7 +222,10 @@ fn run_server(config: &Config, args: &ServerArgs) -> anyhow::Result<()> {
     todo!()
 }
 
-fn list_all_connection_peers(config: &Config, args: &ListAllConnectionPeersArgs) -> anyhow::Result<()> {
+fn list_all_connection_peers(
+    config: &Config,
+    args: &ListAllConnectionPeersArgs,
+) -> anyhow::Result<()> {
     todo!()
 }
 
