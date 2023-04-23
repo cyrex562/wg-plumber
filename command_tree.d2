@@ -1,0 +1,117 @@
+wgp: wgp
+
+wgp->set
+wgp->show
+wgp->delete
+
+# set
+set
+
+interface3: interface
+set->interface3
+interface3_arg: <INTERFACE>
+interface3->interface3_arg
+
+all2: all
+interface3->all2
+all2->up1
+
+up1: up
+interface3_arg->up1
+
+down1: down
+interface3_arg->down1
+all2->down1
+
+
+listen_port3: listen-port
+interface3_arg->listen_port3
+listen_port_3_arg: <LISTEN_PORT>
+listen_port3->listen_port_3_arg
+
+private_key3: private-key
+interface3_arg->private_key3
+priv_key_file: <PRIV_KEY_FILE>
+private_key3->priv_key_file
+
+peer3: peer
+interface3_arg->peer3
+
+peer_pub_key: <PEER_PUB_KEY>
+peer3->peer_pub_key
+
+allowed_ips_3: allowed-ips
+peer_pub_key->allowed_ips_3
+
+allowed_ips_4: <ALLOWED_IPS>
+allowed_ips_3->allowed_ips_4
+
+peer_pub_key3: pub-key
+peer_pub_key->peer_pub_key3
+peer_pub_key4: <PUBLIC_KEY>
+peer_pub_key3->peer_pub_key4
+
+peer_endpoint: endpoint
+peer_pub_key -> peer_endpoint
+peer_endpoint2: <IP:PORT>
+peer_endpoint -> peer_endpoint2
+
+preshared_key: preshared-key
+peer_pub_key -> preshared_key
+preshared_key_arg: <PRESHARED_KEY_FILE>
+preshared_key -> preshared_key_arg
+
+keepalive: keepalive
+peer_pub_key -> keepalive
+keepalive_arg: <KEEPALIVE_INTERVAL>
+keepalive -> keepalive_arg
+
+allowed_ips: allowed-ips
+allowed_ips_arg: <ALLOWED_IPS>
+peer_pub_key->allowed_ips
+allowed_ips->allowed_ips_arg
+
+# delete
+delete->interface1
+
+interface1: interface
+interface1_int_arg: <INTERFACE>
+
+interface1->interface1_int_arg
+
+peer1: peer
+interface1_int_arg->peer1
+peer1_arg: <PEER_PUB_KEY>
+peer1->peer1_arg
+
+# show
+show
+
+interface2: interface
+interface2_int_arg: <INTERFACE>/all
+
+show->interface2
+
+interface2->brief
+
+interface2 -> interface2_int_arg
+interface2_int_arg -> pub_key2
+pub_key2: pubkey
+interface2_int_arg -> priv_key2
+priv_key2: privkey
+interface2_int_arg -> preshared_keys2
+preshared_keys2: preshared-keys
+endpoints2: endpoints
+interface2_int_arg -> endpoints2
+allowed_ips2: allowed-ips
+interface2_int_arg -> allowed_ips2
+handshakes2: handshakes
+interface2_int_arg -> handshakes2
+transfers2: transfers
+interface2_int_arg -> transfers2
+keepalive2: keepalive
+interface2_int_arg -> keepalive2
+listen_port2: listen-port
+interface2_int_arg -> listen_port2
+dump2: dump
+interface2_int_arg -> dump2
