@@ -1,6 +1,8 @@
-use std::{path::PathBuf};
-mod wg_interface;
+use std::path::PathBuf;
 mod show_command;
+mod delete_command;
+mod set_command;
+mod wg_interface;
 
 use clap::{command, Args, Parser, Subcommand};
 use serde::Deserialize;
@@ -30,7 +32,6 @@ struct Interface {}
 #[derive(Deserialize)]
 struct Peer {}
 
-
 #[derive(Subcommand)]
 enum Commands {
     /// show
@@ -42,8 +43,6 @@ enum Commands {
     /// create a interface
     Server(ServerArgs),
 }
-
-
 
 fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
@@ -64,19 +63,19 @@ fn main() -> anyhow::Result<()> {
         Commands::Show(args) => {
             println!("Show");
             show(&config, args)?;
-        },
+        }
         Commands::Set(args) => {
             println!("Set");
             set(&config, args)?;
-        },
+        }
         Commands::Delete(args) => {
             println!("Delete");
             delete(&config, args)?;
-        },
+        }
         Commands::Server(args) => {
             println!("Server");
             server(&config, args)?;
-        },
+        }
     };
     Ok(())
 }

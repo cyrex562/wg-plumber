@@ -4,8 +4,6 @@ use clap::{Args, Subcommand, Arg};
 use crate::Config;
 
 
-
-
 #[derive(Args, Clone)]
 pub struct ShowArgs{
     #[command(subcommand)]
@@ -93,14 +91,28 @@ fn show_interface(config: &Config, args: &ShowInterfaceArgs) -> anyhow::Result<(
                 println!("Show interface handshakes");
                 show_ifc_handshakes(config, &args.interface)
             },
-            ShowInterfaceCommand::Transfers => todo!(),
-            ShowInterfaceCommand::Keepalives => todo!(),
+            ShowInterfaceCommand::Transfers => {
+                println!("Show interface transfers");
+                show_ifc_transfers(config, &args.interface)
+            },
+            ShowInterfaceCommand::Keepalives => {
+                println!("Show interface keepalives");
+                show_ifc_keepalives(config, &args.interface)
+            },
             ShowInterfaceCommand::ListenPort => todo!(),
             ShowInterfaceCommand::Dump => todo!(),
         }
     }
 
     bail!("no subcommand specified for show interface command")
+}
+
+fn show_ifc_keepalives(config: &Config, interface: &str) -> Result<(), anyhow::Error> {
+    todo!()
+}
+
+fn show_ifc_transfers(config: &Config, interface: &str) -> Result<(), anyhow::Error> {
+    todo!()
 }
 
 fn show_ifc_handshakes(config: &Config, interface: &str) -> Result<(), anyhow::Error> {
