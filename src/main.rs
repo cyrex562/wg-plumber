@@ -2,11 +2,16 @@ use std::path::PathBuf;
 mod show_command;
 mod delete_command;
 mod set_command;
-mod wg_interface;
+mod server;
 
 use clap::{command, Args, Parser, Subcommand};
 use serde::Deserialize;
 use show_command::ShowArgs;
+use set_command::SetArgs;
+use delete_command::DeleteArgs;
+use server::{server, ServerArgs};
+
+use crate::{show_command::show, set_command::set, delete_command::delete};
 
 #[derive(Parser)]
 #[command(author,version,about,long_about=None)]
@@ -23,11 +28,12 @@ struct Cli {
 #[derive(Deserialize)]
 struct Config {
     interfaces: Vec<Interface>,
-    peers: Vec<Peer>,
 }
 
 #[derive(Deserialize)]
-struct Interface {}
+struct Interface {
+    peers: Vec<Peer>
+}
 
 #[derive(Deserialize)]
 struct Peer {}
@@ -73,8 +79,10 @@ fn main() -> anyhow::Result<()> {
             delete(&config, args)?;
         }
         Commands::Server(args) => {
-            println!("Server");
-            server(&config, args)?;
+            let runtime = actix_rt::Runtime::new()?;
+            runtime.block_on(async {
+                server(&config, args).await;
+            });
         }
     };
     Ok(())

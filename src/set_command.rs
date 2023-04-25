@@ -1,5 +1,7 @@
 use clap::{Args, Subcommand};
 
+use crate::Config;
+
 #[derive(Args, Clone)]
 pub struct SetArgs {
     #[command(subcommand)]
@@ -106,4 +108,52 @@ pub struct EndpointInterfacePeerArgs {
 pub struct PresharedKeysInterfacePeerArgs {
     #[arg()]
     preshared_key: String,
+}
+
+pub fn set(config: &Config, args: &SetArgs) -> anyhow::Result<()> {
+    match args.command {
+        SetCommand::Interface(arg) => {
+            set_interface(config, &arg)
+        },
+    }
+}
+
+pub fn set_interface(config: &Config, arg: &SetInterfaceArgs) -> anyhow::Result<()> {
+    match arg.command {
+        SetInterfaceCommand::Up => {
+            set_interface_up(config, arg)
+        },
+        SetInterfaceCommand::Down => {
+            set_interface_down(config, arg)
+        },
+        SetInterfaceCommand::ListenPort(arg) => {
+            set_interface_listen_port(config, &arg)
+        },
+        SetInterfaceCommand::PrivateKey(arg) => {
+            set_interface_private_key(config, &arg)
+        },
+        SetInterfaceCommand::Peer(arg) => {
+            set_interface_peer(config, &arg)
+        },
+    }
+}
+
+pub fn set_interface_up(config: &Config, arg: &SetInterfaceArgs) -> anyhow::Result<()> {
+    todo!()
+}
+
+pub fn set_interface_down(config: &Config, arg: &SetInterfaceArgs) -> anyhow::Result<()> {
+    todo!()
+}
+
+pub fn set_interface_listen_port(config: &Config, arg: &ListenPortInterfaceArgs) -> anyhow::Result<()> {
+    todo!()
+}
+
+pub fn set_interface_peer(config: &Config, arg: &SetInterfacePeerArgs) -> anyhow::Result<()> {
+    todo!()
+}
+
+pub fn set_interface_private_key(config: &Config, arg: &PrivateKeyInterfaceArgs) -> anyhow::Result<()> {
+    todo!()
 }

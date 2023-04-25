@@ -50,7 +50,7 @@ pub enum ShowInterfaceCommand {
     Dump
 }
 
-fn show(config: &Config, args: &ShowArgs) -> anyhow::Result<()> {
+pub fn show(config: &Config, args: &ShowArgs) -> anyhow::Result<()> {
     match args.command {
         ShowCommand::Interface(arg) => {
             show_interface(config, &arg)

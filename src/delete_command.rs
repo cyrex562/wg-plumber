@@ -1,5 +1,7 @@
 use clap::{Args, Subcommand};
 
+use crate::Config;
+
 #[derive(Args,Clone)]
 pub struct DeleteArgs{
     #[command(subcommand)]
@@ -31,4 +33,16 @@ pub struct DeleteInterfacePeerArgs {
     /// peer public key
     #[arg()]
     public_key: String,
+}
+
+pub fn delete(config: &Config, args: &DeleteArgs) -> anyhow::Result<()> {
+    match args.command {
+        DeleteCommand::Interface(arg) => {
+            delete_interface(config, &arg)
+        },
+    }
+}
+
+fn delete_interface(config: &Config, arg: &DeleteInterfaceArgs) -> Result<(), anyhow::Error> {
+    todo!()
 }
